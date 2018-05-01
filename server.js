@@ -42,6 +42,21 @@ connection.connect((err) => {
         console.error(err);
     } else {
         console.log("connected as " + connection.threadId);
+        connection.query(`SELECT * FROM wishes`, (err, res) => {
+            if (err) {
+                // create the table
+                connection.query("CREATE TABLE wishes (id int NOT NULL AUTO_INCREMENT, PRIMARY KEY (id), wish varchar(255) NOT NULL);", (err, res) => {
+                        if (err) {
+                            console.log("This was hacky and it FAILED");
+                            console.log(err);
+                        } else {
+                            console.log("% % % % % % % % % This was incredibly dumb but it actually worked! % % % % % % % % % ");
+                        }
+                    });
+            } else {
+                console.log(`Table exists and has ${res.length} entries`);
+            }
+        });
     }
 });
 
