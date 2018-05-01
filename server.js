@@ -15,7 +15,8 @@ var mysql = require("mysql");
 
 var app = express();
 
-var PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4000;
+const ON_HEROKU = process.env.port ? true : false
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -24,13 +25,16 @@ app.use(bodyParser.json());
 app.engine("handlebars", express_handlebars({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-
-var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "password",
-    database: "wishes_crud_app_db"
-});
+if (ON_HEROKU) {
+    var connection = mysql.createConnection(process.env.JAWSDB_URL);
+} else {
+    var connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "password",
+        database: "wishes_crud_app_db"
+    });
+}
 
 connection.connect((err) => {
     if (err) {
@@ -49,7 +53,7 @@ connection.connect((err) => {
 app.get("/", (req, res) => {
     var query_string = 'SELECT * FROM wishes;';
     connection.query(query_string, (err, data) => {
-        if(err) { console.log(err); res.send("Error querying DB, sorry..."); }
+        if (err) { console.log(err); res.send("Error querying DB, sorry..."); }
         else {
             res.render("index", { wishes: data });
         }
@@ -72,5 +76,5 @@ app.post("/", (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
-  });
+});
 
