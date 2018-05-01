@@ -47,7 +47,13 @@ connection.connect((err) => {
 //
 
 app.get("/", (req, res) => {
-    res.end("Hello World.");
+    // res.end("Hello World.");
+    data = [
+        { id: 1, wish: "This is a test wish"},
+        { id: 2, wish: "And so is this" },
+        { id: 3, wish: "And also this third one"}
+    ];
+    res.render("index", { wishes: data });
 });
 
 app.listen(PORT, () => {
