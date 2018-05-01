@@ -16,7 +16,7 @@ var mysql = require("mysql");
 var app = express();
 
 const PORT = process.env.PORT || 4000;
-const ON_HEROKU = process.env.port ? true : false
+const ON_HEROKU = process.env.PORT ? true : false
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -26,6 +26,7 @@ app.engine("handlebars", express_handlebars({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 if (ON_HEROKU) {
+    console.log("Hey! I'm on Heroku!");
     var connection = mysql.createConnection(process.env.JAWSDB_URL);
 } else {
     var connection = mysql.createConnection({
