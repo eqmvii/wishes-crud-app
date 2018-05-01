@@ -47,15 +47,30 @@ connection.connect((err) => {
 //
 
 app.get("/", (req, res) => {
-    // res.end("Hello World.");
-    data = [
-        { id: 1, wish: "This is a test wish"},
-        { id: 2, wish: "And so is this" },
-        { id: 3, wish: "And also this third one"}
-    ];
-    res.render("index", { wishes: data });
+    var query_string = 'SELECT * FROM wishes;';
+    connection.query(query_string, (err, data) => {
+        if(err) { console.log(err); res.send("Error querying DB, sorry..."); }
+        else {
+            res.render("index", { wishes: data });
+        }
+    });
 });
+
+app.post("/", (req, res) => {
+    console.log(req.body);
+    var query_string = "INSERT INTO wishes (wish) VALUES (?)";
+    connection.query(query_string, [req.body.wish], () => {
+        res.redirect("/");
+    });
+});
+
+
+
+//
+// SERVER
+//
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
   });
+
