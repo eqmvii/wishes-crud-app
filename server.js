@@ -87,6 +87,19 @@ app.post("/", (req, res) => {
     });
 });
 
+app.delete("/wishes/:id", (req, res) => {
+    console.log(`You are trying to delete ${req.params.id}`);
+    var query_string = "DELETE FROM wishes WHERE id = ?";
+    connection.query(query_string, parseInt(req.params.id), (err, data) => {
+        if(err) { console.log(err); }
+        else {
+            console.log("Delete!");
+            console.log(data);
+        }
+        res.end("Bye");
+    });
+});
+
 
 
 //

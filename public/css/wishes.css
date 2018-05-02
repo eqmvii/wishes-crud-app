@@ -1,0 +1,6 @@
+.delete-link {
+    color: blue;
+    cursor: pointer;
+    font-weight: strong;
+    text-decoration: underline;
+}

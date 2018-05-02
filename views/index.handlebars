@@ -2,9 +2,9 @@
 
 
 
-<ul>
+<ul data-js="wishes.wishlist">
   {{#each wishes}}
-  	<li>ID: {{this.id}} | Wish: {{this.wish}}</li>
+  	<li>ID: {{this.id}} | Wish: {{this.wish}} | <span data-js="{{this.id}}" class="delete-link">Delete</span></li>
   {{/each}}
 </ul>
 
