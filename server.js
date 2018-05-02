@@ -28,6 +28,7 @@ app.set("view engine", "handlebars");
 if (ON_HEROKU) {
     console.log("Hey! I'm on Heroku!");
     var connection = mysql.createConnection(process.env.JAWSDB_URL);
+    // var connection = mysql.createConnection('mysql://tx7virb267rgncg9:sr5t0mx560qscd3b@umabrisfx8afs3ja.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/l6gkk8uvauupn6nv');
 } else {
     var connection = mysql.createConnection({
         host: "localhost",
@@ -42,6 +43,7 @@ connection.connect((err) => {
         console.error(err);
     } else {
         console.log("connected as " + connection.threadId);
+        // the below code is really only needed once to create the database... but leaving it as a record...
         connection.query(`SELECT * FROM wishes`, (err, res) => {
             if (err) {
                 // create the table
@@ -65,6 +67,7 @@ connection.connect((err) => {
 //
 // ROUTES
 //
+app.use(express.static('public'))
 
 app.get("/", (req, res) => {
     var query_string = 'SELECT * FROM wishes;';
